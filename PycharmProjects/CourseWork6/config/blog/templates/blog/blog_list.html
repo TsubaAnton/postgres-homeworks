@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load my_tags %}
+{% block content %}
+
+<div class="col-12 text-center">
+    {% if perms.blog.add_blog %}
+    <a type="button" href="{% url 'blog:blog_create' %}" class="btn btn-lg btn-block btn-outline-primary">Добавить статью</a>
+    {% endif %}
+</div>
+
+    <div class="col-12 text-center mt-4">
+        <h2>Информация о рассылках</h2>
+        <p>Количество рассылок всего: {{ total_newsletters }}</p>
+        <p>Количество активных рассылок: {{ active_newsletters }}</p>
+        <p>Количество уникальных клиентов для рассылок: {{ unique_clients }}</p>
+    </div>
+
+    <div class="row text-center mt-4">
+        <h2>Случайные статьи</h2>
+        {% for article in random_articles %}
+        <div class="col-3">
+            <div class="card mb-4 box-shadow">
+                <img class="card-img-top" src="{{ article.image.url }}" alt="Card image cap" height="250">
+                <div class="card-header">
+                    <h2 class="my-0 font-weight-normal">{{ article.title }}</h2>
+                </div>
+                <div class="card-body">
+                    <a href="{% url 'blog:blog_detail' article.pk %}" type="button" class="btn btn-lg btn-block btn-outline-primary">Просмотреть статью</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% endblock %}

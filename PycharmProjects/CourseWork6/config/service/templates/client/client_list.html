@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container">
+    <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+        <h1 class="display-4">Список имеющихся клиентов</h1>
+    </div>
+    <div class="row">
+        {% for object in object_list %}
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <h6 class="card-title">ФИО клиента: {{ object.fio }}</h6>
+                    <h6 class="card-subtitle mb-2 text-muted">Email клиента: {{ object.email }}</h6>
+                    <p class="card-text">{{ object.comment }}</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="btn-group">
+                            <a type="button" class="btn btn-sm btn-outline-success" href="{% url 'service:client_detail' object.pk %}">Просмотр</a>
+                            {% if object.owner == user %}
+                            <a type="button" class="btn btn-sm btn-outline-warning" href="{% url 'service:client_update' object.pk %}">Редактирование</a>
+                            <a type="button" class="btn btn-sm btn-outline-danger" href="{% url 'service:client_delete' object.pk %}">Удаление</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="text-center mt-4">
+        <a class="btn btn-outline-primary" href="{% url 'service:client_create' %}">Создать нового клиента</a>
+    </div>
+</div>
+
+{% endblock %}
